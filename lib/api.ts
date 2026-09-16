@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL =
-  process.env.NEXT_PUBLIC_GRAPHQL_URL || "http://localhost:4002/graphql";
+  process.env.NEXT_PUBLIC_GRAPHQL_URL || "https://hotcol-waiter-backend.vercel.app/graphql";
 
 const TOKEN_KEY = "hotcol_waiter_token";
 const WAITER_KEY = "hotcol_waiter_session";
