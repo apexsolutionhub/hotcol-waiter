@@ -347,8 +347,16 @@ export default function WaiterPortalPage() {
   }[] = [
     { id: "order", label: "New order", icon: UtensilsCrossed },
     { id: "orders", label: "My orders", icon: ShoppingBag },
-    { id: "pay", label: "Payment", icon: Wallet },
+    ...(session?.waiterPaymentApprovalEnabled
+      ? ([{ id: "pay" as const, label: "Payment", icon: Wallet }] as const)
+      : []),
   ];
+
+  useEffect(() => {
+    if (session && !session.waiterPaymentApprovalEnabled && tab === "pay") {
+      setTab("order");
+    }
+  }, [session, tab]);
 
   if (!session || loading) {
     return (
@@ -838,7 +846,7 @@ export default function WaiterPortalPage() {
                 />
               ) : null}
 
-              {tab === "pay" ? (
+              {tab === "pay" && session.waiterPaymentApprovalEnabled ? (
                 <WaiterPaymentPanel
                   orders={orders}
                   approvalEnabled={session.waiterPaymentApprovalEnabled}
